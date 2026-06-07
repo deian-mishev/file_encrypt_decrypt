@@ -22,7 +22,7 @@ public class ApiOriginFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String reqOrigin = request.getHeader("Origin");
-        logger.error("Origin:: " + reqOrigin + " Request URL::" + request.getRequestURL().toString() + " Start Time="
+        logger.info("Origin:: " + reqOrigin + " Request URL::" + request.getRequestURL().toString() + " Start Time="
                 + Instant.now());
         filterChain.doFilter(request, response);
     }

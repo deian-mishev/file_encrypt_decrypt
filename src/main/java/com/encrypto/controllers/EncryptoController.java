@@ -34,9 +34,16 @@ public class EncryptoController {
 
     @PostMapping("decrypt")
     public @ResponseBody Mono<FileStamp> decrypt(@Valid @RequestBody final FileStamp file) {
-        return opps.keys(file.getName()).flatMap(opps.opsForValue()::get)
+        return opps.opsForValue().get(file.getName())
                 .filter(a -> enc.matches(file.getPassword(), a.getPassword()))
-                .flatMap(a -> opps.opsForValue().delete(a.getName()).then(Mono.just(a))).next();
+                .flatMap(a -> {
+                    FileStamp response = new FileStamp();
+                    response.setName(a.getName());
+                    response.setIv(a.getIv());
+                    response.setSalt(a.getSalt());
+                    response.setExpiration(a.getExpiration());
+                    return opps.opsForValue().delete(a.getName()).then(Mono.just(response));
+                });
     }
 
     @PostMapping("encrypt")

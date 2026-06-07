@@ -14,6 +14,8 @@ export function getWorkerJS() {
                 buffer
             ).then(function(a){
                 postMessage(a);
+            }).catch(function(){
+                postMessage({ error: true });
             });
         } else {
             crypto.subtle.decrypt(
@@ -25,6 +27,8 @@ export function getWorkerJS() {
                 buffer
             ).then(function(a){
                 postMessage(a);
+            }).catch(function(){
+                postMessage({ error: true });
             });
         }
     };

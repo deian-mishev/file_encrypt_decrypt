@@ -91,6 +91,10 @@ $(document).ready(function () {
                             success: function (res2) {
                                 if (res2) {
                                     worker.onmessage = function (evt) {
+                                        if (evt.data && evt.data.error) {
+                                            alert('Encryption failed.');
+                                            return;
+                                        }
                                         aes.download(
                                             evt.data,
                                             name.replaceAll('/', '_'),
@@ -137,6 +141,10 @@ $(document).ready(function () {
                                     const encName = decrDataBuff.slice(8);
                                     aes.decryptMessage(aesKey, encName, iv).then(function (decr) {
                                         worker.onmessage = function (evt) {
+                                            if (evt.data && evt.data.error) {
+                                                alert('Decryption failed. Wrong password or corrupted file.');
+                                                return;
+                                            }
                                             aes.download(evt.data, aes.convertUintArraytoString(decr), file.type);
                                         };
                                         worker.postMessage([file, iv, aesKey, false]);

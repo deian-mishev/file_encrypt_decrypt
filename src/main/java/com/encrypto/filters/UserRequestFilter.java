@@ -54,7 +54,6 @@ public class UserRequestFilter extends OncePerRequestFilter {
         try {
             requests = requestCountsPerIpAddress.get(clientIpAddress);
             if (requests > apiConfig.getMaxReqPerSec()) {
-                requestCountsPerIpAddress.put(clientIpAddress, requests);
                 return true;
             }
         } catch (ExecutionException e) {
