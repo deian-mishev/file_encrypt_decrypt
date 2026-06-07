@@ -1,0 +1,15 @@
+# Copy to terraform.tfvars and adjust as needed. terraform.tfvars is gitignored.
+# Values below match the live deployment as of 2026-06-07.
+
+aws_region        = "us-east-1"
+domain_name       = "encrypto.link"
+hosted_zone_id    = "Z0565007IYCVZFSULKN6"
+ecr_repo_name     = "encrypto_repository"
+ec2_ami           = "ami-03c7d01cf4dedc891"
+ec2_instance_type = "t2.micro"
+ec2_key_pair_name = "encrypto-ed.pem"
+
+# Pin these to the subnet the live instance actually runs in — the default VPC has
+# multiple subnets and an unpinned lookup can pick a different one, forcing replacement.
+vpc_id    = "vpc-0a73dfa5be73f440b"
+subnet_id = "subnet-0379e46571016872e"

@@ -42,3 +42,12 @@ env/*
 node_modules
 public
 application-production.yml
+
+### TERRAFORM ###
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+terraform/crash.log
+terraform/crash.*.log
