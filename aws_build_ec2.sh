@@ -21,8 +21,8 @@ ECR_REPO=$(prop ''$B_NAME'.ecr.repo')
 # Authenticate with ecr registry
 aws ecr get-login-password --region $DEPLOY_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$DEPLOY_REGION.amazonaws.com
 
-# Build Docker
-docker build -f Dockerfile -t $B_NAME .
+# Build Docker (target instance is x86_64 — force amd64 regardless of build host arch)
+docker build --platform linux/amd64 -f Dockerfile -t $B_NAME .
 
 # TAG
 docker tag $B_NAME:latest $ACCOUNT_ID.dkr.ecr.$DEPLOY_REGION.amazonaws.com/$ECR_REPO:latest

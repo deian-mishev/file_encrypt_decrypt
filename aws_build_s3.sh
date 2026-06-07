@@ -43,15 +43,15 @@ npm run build
 aws s3api create-bucket --bucket $DOMAIN --region $DEPLOY_REGION
 aws s3api create-bucket --bucket www.$DOMAIN --region ${DEPLOY_REGION}
 
-aws s3 sync $B_FOLDER s3://www.$DOMAIN
+aws s3 sync $B_FOLDER s3://$DOMAIN
 
-block_public_access $DOMAIN true
-block_public_access www.$DOMAIN false
+block_public_access $DOMAIN false
+block_public_access www.$DOMAIN true
 
-put_bucket_policy BUCKET_NAME www.$DOMAIN $GET_POLICY
+put_bucket_policy BUCKET_NAME $DOMAIN $GET_POLICY
 
-aws s3 website s3://www.$DOMAIN --region $DEPLOY_REGION \
+aws s3 website s3://$DOMAIN --region $DEPLOY_REGION \
                              --index-document $S_ENTRY \
                              --error-document $S_ERROR
 
-aws_redirect $DOMAIN www.$DOMAIN https
+aws_redirect www.$DOMAIN $DOMAIN http
